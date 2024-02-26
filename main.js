@@ -81,7 +81,7 @@ function printObject(jsonString, keys = []) {
         }
         console.log(obj);
     } catch (error) {
-        console.error(error.message);
+        console.log(error.message);
     }
 }
 
@@ -90,3 +90,29 @@ printObject('["это", "массив", "а не объект"]');
 printObject('"а это строка"');
 printObject('42');
 printObject('{"name": "Айбек", "age": 31}', ['name', 'city']);
+
+
+// 5. Напишите промис, вызывающий функцию с задержкой в 1 секунду. Если она выполнилась успешно, мы увидим результат в консоли. Если было выброшено исключение, его нужно перехватить и вывести в консоль. 
+
+function delayedFunction() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+        
+            try {
+               
+                const result = myFunction(); 
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        }, 1000);
+    });
+}
+
+delayedFunction()
+    .then(result => {
+        console.log('Результат:', result);
+    })
+    .catch(error => {
+        console.log('Ошибка:', error);
+    });
