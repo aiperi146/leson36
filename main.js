@@ -43,12 +43,9 @@ function printObject(jsonString, keys = []) {
         if (keys.length === 0) {
             console.log(obj);
         } else {
-            const filteredObj = {};
-            keys.forEach(key => {
-                if (obj.hasOwnProperty(key)) {
-                    filteredObj[key] = obj[key];
-                }
-            });
+            const filteredObj = Object.fromEntries(
+                Object.entries(obj).filter(([key]) => keys.includes(key))
+            );
             console.log(filteredObj);
         }
     } catch (error) {
@@ -56,6 +53,40 @@ function printObject(jsonString, keys = []) {
     }
 }
 
-
 printObject('{"name": "Нуржан", "age": 20, "city": "Бишкек"}');
 printObject('{"name": "Нуржан", "age": 20, "city": "Бишкек"}', ['name', 'city']);
+
+/* 4. Функция должна выбрасывать исключение в нижеперечисленных случаях (cделайте несколько вызова функции с некорректными параметрами и обработайте данные исключения снаружи вызова):
+если результатом обработки JSON является не объект (выберите способ проверки по душе):
+printObject('["это", "массив", "а не объект"]');
+printObject('"а это строка"');
+printObject('42');
+если передан второй параметр и как минимум один из ключей не удаётся обнаружить в объекте (можно проверять через hasOwn/hasOwnProperty, либо оператор in, либо сравнивать с undefined)
+printObject('{"name": "Айбек", "age": 31}', ['name', 'city']);
+// ключ city отсутствует в полученном объекте */
+
+function printObject(jsonString, keys = []) {
+    let obj;
+    try {
+        obj = JSON.parse(jsonString);
+        if (typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Результат обработки JSON не является объектом');
+        }
+        if (keys.length > 0) {
+            keys.forEach(key => {
+                if (!(key in obj)) {
+                    throw new Error(`Ключ "${key}" отсутствует в объекте`);
+                }
+            });
+        }
+        console.log(obj);
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+
+printObject('["это", "массив", "а не объект"]');
+printObject('"а это строка"');
+printObject('42');
+printObject('{"name": "Айбек", "age": 31}', ['name', 'city']);
