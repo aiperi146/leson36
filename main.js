@@ -14,6 +14,7 @@ printObject('{"myKey": 42}');
 printObject('{I am not} a valid JSON');
 // Не удалось получить JSON из значения: "{I am not} a valid JSON" */
 
+
 function printObject(jsonString) {
     try {
         const obj = JSON.parse(jsonString);
