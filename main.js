@@ -24,3 +24,38 @@ function printObject(jsonString) {
 }
 
 printObject('{I am not} a valid JSON');
+
+/* 3. Добавьте второй аргумент функции - массив строк. Если он передан, будет отвечать за перечень ключей, которые нужно получить из объекта, и выводить в консоль только их:
+printObject(
+    '{"name": "Нуржан", "age": 20, "city": "Бишкек"}',
+);
+// в консоли виден весь объект: {name: Нуржан, age: 20, city: Бишкек}
+
+printObject(
+    '{"name": "Нуржан", "age": 20, "city": "Бишкек"}',
+    ['name', 'city'],
+);
+// в консоли видны только два ключа объекта: {name: Нуржан, city: Бишкек} */
+
+function printObject(jsonString, keys = []) {
+    try {
+        const obj = JSON.parse(jsonString);
+        if (keys.length === 0) {
+            console.log(obj);
+        } else {
+            const filteredObj = {};
+            keys.forEach(key => {
+                if (obj.hasOwnProperty(key)) {
+                    filteredObj[key] = obj[key];
+                }
+            });
+            console.log(filteredObj);
+        }
+    } catch (error) {
+        console.log(`Не удалось получить JSON из значения: "${jsonString}"`);
+    }
+}
+
+
+printObject('{"name": "Нуржан", "age": 20, "city": "Бишкек"}');
+printObject('{"name": "Нуржан", "age": 20, "city": "Бишкек"}', ['name', 'city']);
