@@ -37,6 +37,7 @@ printObject(
 );
 // в консоли видны только два ключа объекта: {name: Нуржан, city: Бишкек} */
 
+
 function printObject(jsonString, keys = []) {
     try {
         const obj = JSON.parse(jsonString);
