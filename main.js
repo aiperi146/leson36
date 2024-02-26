@@ -86,6 +86,7 @@ function printObject(jsonString, keys = []) {
 }
 
 
+
 printObject('["это", "массив", "а не объект"]');
 printObject('"а это строка"');
 printObject('42');
